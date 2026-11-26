@@ -1,0 +1,4 @@
+-- CodeExam schema. Every table is created here.
+-- Load into an EMPTY database (see SKELETON_SETUP.md). Later changes go in database/patches/.
+-- Tables are added by the stories that need them (US-01 adds users), once the team has
+-- chosen between the README section 10 schema and the proposal's ERD.

@@ -1,0 +1,13 @@
+<header class="nav">
+  <a class="nav-brand" href="{{ url_for('main.home') }}">CodeExam</a>
+  {% if current_user %}
+    <nav class="nav-links" aria-label="Main">
+      {# Role-specific links are added by the stories that build those pages. #}
+      <span class="nav-user">{{ current_user.name }} ({{ current_user.role }})</span>
+      <form method="post" action="{{ url_for('auth.logout') }}" class="inline-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-secondary">Log out</button>
+      </form>
+    </nav>
+  {% endif %}
+</header>

@@ -1,0 +1,53 @@
+/* CodeExam stylesheet. Replace the token values with the Figma colours and fonts. */
+:root {
+  --color-primary: #1f5fbf;
+  --color-danger:  #b42318;
+  --color-success: #067647;
+  --color-warning: #b54708;
+  --color-text:    #1d2939;
+  --color-muted:   #667085;
+  --color-border:  #d0d5dd;
+  --color-bg:      #f7f8fa;
+  --color-surface: #ffffff;
+  --radius: 6px;
+  --space: 8px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-code: ui-monospace, Consolas, "Courier New", monospace;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font); color: var(--color-text); background: var(--color-bg); }
+.container { max-width: 1100px; margin: 0 auto; padding: calc(var(--space) * 3); }
+.muted { color: var(--color-muted); }
+
+/* Navigation */
+.nav { display: flex; align-items: center; justify-content: space-between;
+       padding: var(--space) calc(var(--space) * 3); background: var(--color-surface);
+       border-bottom: 1px solid var(--color-border); }
+.nav-brand { font-weight: 700; color: var(--color-primary); text-decoration: none; }
+.nav-links { display: flex; align-items: center; gap: calc(var(--space) * 2); }
+.inline-form { display: inline; }
+
+/* Cards */
+.card { background: var(--color-surface); border: 1px solid var(--color-border);
+        border-radius: var(--radius); padding: calc(var(--space) * 3); }
+.card-narrow { max-width: 420px; margin: calc(var(--space) * 6) auto; }
+
+/* Forms */
+label { display: block; margin-top: calc(var(--space) * 2); font-weight: 600; }
+input, select, textarea { width: 100%; padding: var(--space); margin-top: 4px;
+        border: 1px solid var(--color-border); border-radius: var(--radius); font: inherit; }
+.form-error, .field-error { color: var(--color-danger); }
+
+/* Buttons */
+.btn { display: inline-block; padding: var(--space) calc(var(--space) * 2); border-radius: var(--radius);
+       border: 1px solid transparent; font: inherit; cursor: pointer; }
+.btn-primary { background: var(--color-primary); color: #fff; margin-top: calc(var(--space) * 3); }
+.btn-secondary { background: var(--color-surface); color: var(--color-text); border-color: var(--color-border); }
+.btn-danger { background: var(--color-danger); color: #fff; }
+.btn:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 2px; }
+
+/* Flash messages */
+.flash { padding: var(--space) calc(var(--space) * 2); border-radius: var(--radius); border: 1px solid var(--color-border); }
+.flash-success { border-color: var(--color-success); color: var(--color-success); }
+.flash-error { border-color: var(--color-danger); color: var(--color-danger); }
