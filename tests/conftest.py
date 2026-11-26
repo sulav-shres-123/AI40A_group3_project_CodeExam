@@ -6,9 +6,13 @@ import pytest
 
 import config
 from app import create_app
+from app.models.user import User
 
 TEST_DB = "codeexam_test"
 SCHEMA_FILE = Path(__file__).resolve().parent.parent / "database" / "schema.sql"
+
+TEACHER = {"name": "Test Teacher", "email": "teacher@test.local", "password": "teacher-pass-1"}
+STUDENT = {"name": "Test Student", "email": "student@test.local", "password": "student-pass-1"}
 
 
 def _sql_statements(text):
@@ -43,9 +47,20 @@ def app():
         "WTF_CSRF_ENABLED": False,      # tests don't send CSRF tokens
         "SESSION_COOKIE_SECURE": False,
     })
+    with app.app_context():
+        User.create(TEACHER["name"], TEACHER["email"], TEACHER["password"], "teacher")
+        User.create(STUDENT["name"], STUDENT["email"], STUDENT["password"], "student")
     yield app
 
 
 @pytest.fixture
 def client(app):
     return app.test_client()
+
+
+@pytest.fixture
+def login(client):
+    """Usage in a test:  login(TEACHER)"""
+    def do_login(person):
+        return client.post("/login", data={"email": person["email"], "password": person["password"]})
+    return do_login
