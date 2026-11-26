@@ -1,6 +1,7 @@
 """URL for the home page → MainController."""
 from flask import Blueprint
 
+from app.auth import login_required
 from app.controllers.main_controller import MainController
 
 
@@ -10,6 +11,5 @@ class MainRoutes:
         self.controller = MainController()
 
     def register(self):
-        # US-01 wraps this in login_required
-        self.bp.add_url_rule("/", "home", self.controller.home)
+        self.bp.add_url_rule("/", "home", login_required(self.controller.home))
         return self.bp

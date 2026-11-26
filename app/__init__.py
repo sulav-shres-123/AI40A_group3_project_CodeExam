@@ -3,6 +3,7 @@ from flask import Flask, g, render_template
 from flask_wtf.csrf import CSRFProtect
 
 import config
+from app.auth import load_current_user
 from app.database import close_db
 
 csrf = CSRFProtect()
@@ -15,12 +16,12 @@ def create_app(test_config=None):
         app.config.update(test_config)      # tests point at codeexam_test here
 
     csrf.init_app(app)                      # every POST needs a CSRF token
+    app.before_request(load_current_user)   # g.user = who is logged in (or None)
     app.teardown_appcontext(close_db)       # always close the DB connection
-    # US-01 adds: app.before_request(load_current_user)
 
     @app.context_processor
     def inject_current_user():
-        # Every template can use {{ current_user }} (None until US-01 adds login)
+        # Every template can use {{ current_user }}
         return {"current_user": g.get("user")}
 
     _register_routes(app)
@@ -29,10 +30,11 @@ def create_app(test_config=None):
 
 
 def _register_routes(app):
+    from app.routes.auth_routes import AuthRoutes
     from app.routes.main_routes import MainRoutes
 
-    # Add one line per routes class as stories are built (US-01 adds AuthRoutes).
-    for routes in (MainRoutes(),):
+    # Add one line per routes class as stories are built.
+    for routes in (AuthRoutes(), MainRoutes()):
         app.register_blueprint(routes.register())
 
 
